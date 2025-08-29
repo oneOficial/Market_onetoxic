@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WEBSHOP ONE TOXIC</title>
+  <style>
+    /* Video Background */
+    #bg-video {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: -1;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+      color: #fff;
+      background: rgba(0,0,0,0.7); /* fallback kalau video gagal */
+      position: relative;
+      z-index: 0;
+    }
+
+    /* Logo bulat */
+    .logo {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 10px;
+    }
+    .logo img {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      border: 3px solid #00f2fe;
+      box-shadow: 0 0 20px rgba(0,255,255,0.7);
+      object-fit: cover;
+    }
+
+    h1 {
+      text-align: center;
+      text-shadow: 0 0 15px #00f2fe;
+      margin-bottom: 20px;
+    }
+
+    /* Grid produk */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      gap: 15px;
+      margin-top: 20px;
+    }
+    .card {
+      background: rgba(0,0,0,0.6);
+      padding: 20px;
+      border-radius: 12px;
+      text-align: center;
+      cursor: pointer;
+      box-shadow: 0 0 10px rgba(0,255,255,0.4);
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .card:hover {
+      background: rgba(0,0,0,0.8);
+      transform: scale(1.05);
+      box-shadow: 0 0 20px rgba(0,255,255,0.8);
+    }
+
+    /* Modal popup */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.85);
+      justify-content: center;
+      align-items: center;
+    }
+    .modal-content {
+      background: rgba(20,20,20,0.9);
+      padding: 25px;
+      border-radius: 15px;
+      width: 90%;
+      max-width: 400px;
+      text-align: center;
+      position: relative;
+      box-shadow: 0 0 25px rgba(0,255,255,0.7);
+      animation: float 1.5s infinite ease-in-out;
+    }
+    .modal-content h2, .modal-content p {
+      color: #00f2fe;
+      text-shadow: 0 0 10px #00f2fe;
+    }
+    .close {
+      position: absolute;
+      top: 10px; right: 15px;
+      font-size: 22px;
+      cursor: pointer;
+      color: #fff;
+      text-shadow: 0 0 8px #00f2fe;
+    }
+    .btn {
+      display: inline-block;
+      margin-top: 15px;
+      padding: 10px 20px;
+      background: #00f2fe;
+      color: #000;
+      border-radius: 5px;
+      text-decoration: none;
+      font-weight: bold;
+      box-shadow: 0 0 15px rgba(0,255,255,0.7);
+      transition: background 0.3s, box-shadow 0.3s;
+    }
+    .btn:hover {
+      background: #0ff;
+      box-shadow: 0 0 25px rgba(0,255,255,1);
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Video Background -->
+  <video autoplay muted loop id="bg-video">
+    <source src="https://i.imgur.com/WybzlZf.mp4" type="video/mp4">
+    Browser kamu tidak mendukung video HTML5.
+  </video>
+
+  <!-- Logo -->
+  <div class="logo">
+    <img src="https://iili.io/K3pwrSp.png" alt="Logo Saya">
+  </div>
+
+  <h1>𝗔𝗟𝗟 𝗠𝗔𝗥𝗞𝗘𝗧 𝗢𝗡𝗘 𝗧𝗢𝗫𝗜𝗖</h1>
+
+  <!-- Grid Produk -->
+  <div class="grid">
+    <div class="card" onclick="openModal('Panel Run whatsapp', 'HARGA DARI 1K/GB', 'Rp 1.000')">PANEL BOT</div>
+    <div class="card" onclick="openModal('SC PUSH KONTAK ANTI KENON', 'ANTI DELAY, ANTI KENON, SUPPORT WA ORI/BISNIS, AUTO SAVE DLL', 'Rp 5.000')">SC BOT PUSHKONTAK</div>
+    <div class="card" onclick="openModal('Pulsa 50K', 'Isi ulang pulsa Rp50.000 semua operator', 'Rp 50.500')">Pulsa 50K</div>
+    <div class="card" onclick="openModal('Pulsa 100K', 'Isi ulang pulsa Rp100.000 semua operator', 'Rp 100.500')">Pulsa 100K</div>
+    <div class="card" onclick="openModal('Kuota 2GB', 'Paket data 2GB berlaku 30 hari', 'Rp 15.000')">Kuota 2GB</div>
+    <div class="card" onclick="openModal('Kuota 5GB', 'Paket data 5GB berlaku 30 hari', 'Rp 30.000')">Kuota 5GB</div>
+    <div class="card" onclick="openModal('Kuota 10GB', 'Paket data 10GB berlaku 30 hari', 'Rp 50.000')">Kuota 10GB</div>
+    <div class="card" onclick="openModal('Kuota Unlimited', 'Paket data unlimited 30 hari', 'Rp 100.000')">Kuota Unlimited</div>
+    <div class="card" onclick="openModal('Hosting Basic', 'Hosting murah untuk website personal', 'Rp 25.000/bln')">Hosting Basic</div>
+    <div class="card" onclick="openModal('Domain .com', 'Domain profesional untuk brand kamu', 'Rp 120.000/thn')">Domain .com</div>
+  </div>
+
+  <!-- Modal -->
+  <div id="productModal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal()">&times;</span>
+      <h2 id="modalTitle"></h2>
+      <p id="modalDesc"></p>
+      <p id="modalPrice"></p>
+      <a id="buyBtn" href="#" target="_blank" class="btn">Beli Sekarang</a>
+    </div>
+  </div>
+
+  <script>
+    function openModal(title, desc, price) {
+      document.getElementById("modalTitle").innerText = title;
+      document.getElementById("modalDesc").innerText = desc;
+      document.getElementById("modalPrice").innerText = price;
+
+      let nomorWA = "6281234567890"; // ganti nomor WA kamu
+      let pesan = `Halo, saya mau beli ${title} (${price})`;
+      document.getElementById("buyBtn").href = "https://wa.me/" + nomorWA + "?text=" + encodeURIComponent(pesan);
+
+      document.getElementById("productModal").style.display = "flex";
+    }
+
+    function closeModal() {
+      document.getElementById("productModal").style.display = "none";
+    }
+
+    window.onclick = function(event) {
+      let modal = document.getElementById("productModal");
+      if (event.target == modal) {
+        closeModal();
+      }
+    }
+  </script>
+
+</body>
+</html>
