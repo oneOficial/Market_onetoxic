@@ -3,193 +3,424 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>WEBSHOP ONE TOXIC</title>
+  <title>Toko Online</title>
   <style>
-    /* Video Background */
-    #bg-video {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      z-index: -1;
-    }
-
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 20px;
-      color: #fff;
-      background: rgba(0,0,0,0.7); /* fallback kalau video gagal */
-      position: relative;
-      z-index: 0;
-    }
-
-    /* Logo bulat */
-    .logo {
-      display: flex;
-      justify-content: center;
-      margin-bottom: 10px;
-    }
-    .logo img {
-      width: 120px;
-      height: 120px;
-      border-radius: 50%;
-      border: 3px solid #00f2fe;
-      box-shadow: 0 0 20px rgba(0,255,255,0.7);
-      object-fit: cover;
-    }
-
-    h1 {
-      text-align: center;
-      text-shadow: 0 0 15px #00f2fe;
-      margin-bottom: 20px;
-    }
+    body { margin:0; font-family:Arial,sans-serif; background:#f9f9f9; padding-bottom:70px; }
+    header { background:#4CAF50; color:white; text-align:center; padding:15px; }
+    .container { padding:15px; }
+    h2 { font-size:18px; margin-bottom:15px; color:#333; }
 
     /* Grid produk */
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-      gap: 15px;
-      margin-top: 20px;
-    }
-    .card {
-      background: rgba(0,0,0,0.6);
-      padding: 20px;
-      border-radius: 12px;
-      text-align: center;
-      cursor: pointer;
-      box-shadow: 0 0 10px rgba(0,255,255,0.4);
-      transition: transform 0.3s, box-shadow 0.3s;
-    }
-    .card:hover {
-      background: rgba(0,0,0,0.8);
-      transform: scale(1.05);
-      box-shadow: 0 0 20px rgba(0,255,255,0.8);
-    }
+    .grid { display:grid; grid-template-columns:repeat(4,1fr); gap:20px 10px; text-align:center; }
+    .item { cursor:pointer; }
+    .icon-box { background:#fff; border-radius:20px; width:70px; height:70px; margin:0 auto 8px; display:flex; align-items:center; justify-content:center; box-shadow:0 2px 5px rgba(0,0,0,0.08); }
+    .icon-box img { width:40px; height:40px; border-radius:12px; }
+    .item p { margin:0; font-size:13px; color:#333; }
 
-    /* Modal popup */
-    .modal {
-      display: none;
-      position: fixed;
-      z-index: 1000;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      background: rgba(0,0,0,0.85);
-      justify-content: center;
-      align-items: center;
-    }
-    .modal-content {
-      background: rgba(20,20,20,0.9);
-      padding: 25px;
-      border-radius: 15px;
-      width: 90%;
-      max-width: 400px;
-      text-align: center;
-      position: relative;
-      box-shadow: 0 0 25px rgba(0,255,255,0.7);
-      animation: float 1.5s infinite ease-in-out;
-    }
-    .modal-content h2, .modal-content p {
-      color: #00f2fe;
-      text-shadow: 0 0 10px #00f2fe;
-    }
-    .close {
-      position: absolute;
-      top: 10px; right: 15px;
-      font-size: 22px;
-      cursor: pointer;
-      color: #fff;
-      text-shadow: 0 0 8px #00f2fe;
-    }
-    .btn {
-      display: inline-block;
-      margin-top: 15px;
-      padding: 10px 20px;
-      background: #00f2fe;
-      color: #000;
-      border-radius: 5px;
-      text-decoration: none;
-      font-weight: bold;
-      box-shadow: 0 0 15px rgba(0,255,255,0.7);
-      transition: background 0.3s, box-shadow 0.3s;
-    }
-    .btn:hover {
-      background: #0ff;
-      box-shadow: 0 0 25px rgba(0,255,255,1);
-    }
+    /* Modal */
+    .modal { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); z-index:9999; justify-content:center; align-items:center; }
+    .modal-content { background:#fff; width:90%; max-width:400px; border-radius:12px; padding:20px; position:relative; max-height:90vh; overflow-y:auto; }
+    .close { position:absolute; top:10px; right:15px; font-size:20px; cursor:pointer; }
 
-    @keyframes float {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-10px); }
-    }
+    /* Harga */
+    .price-row { display:flex; justify-content:space-between; align-items:center; margin:8px 0; padding:10px 14px; border:1px solid #eee; border-radius:10px; background:#f9f9f9; }
+    .price-row span { font-weight:500; font-size:14px; }
+    .price-row button { background:#4CAF50; color:#fff; border:none; padding:8px 20px; border-radius:20px; cursor:pointer; font-weight:bold; transition:background 0.2s ease; }
+    .price-row button:hover { background:#43a047; }
+    .btn-back { margin-top:20px; width:100%; padding:10px; border:none; background:#f44336; color:#fff; border-radius:8px; cursor:pointer; }
+    
+    .long-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 25px;
+}
+
+.long-btn {
+  background: #4CAF50;
+  color: #fff;
+  border: none;
+  padding: 12px;
+  border-radius: 17px;
+  font-size: 15px;
+  font-weight: bold;
+  cursor: pointer;
+  width: 70%;           /* tambah ini */
+  align-self: center;   /* biar posisinya di tengah */
+}
+  transition: background 0.2s ease;
+}
+
+.long-btn:hover {
+  background: #43a047;
+}
+
   </style>
 </head>
 <body>
 
-  <!-- Video Background -->
-  <video autoplay muted loop id="bg-video">
-    <source src="https://i.imgur.com/Elz6zUQ.mp4" type="video/mp4">
-    Browser kamu tidak mendukung video HTML5.
-  </video>
-
-  <!-- Logo -->
-  <div class="logo">
-    <img src="https://iili.io/K3pwrSp.png" alt="Logo Saya">
-  </div>
-
-  <h1>𝗔𝗟𝗟 𝗠𝗔𝗥𝗞𝗘𝗧 𝗢𝗡𝗘 𝗧𝗢𝗫𝗜𝗖</h1>
-
-  <!-- Grid Produk -->
-  <div class="grid">
-    <div class="card" onclick="openModal('Panel Run whatsapp', 'HARGA DARI 1K/GB', 'Rp 1.000')">PANEL BOT</div>
-    <div class="card" onclick="openModal('SC PUSH KONTAK ANTI KENON', 'ANTI DELAY, ANTI KENON, SUPPORT WA ORI/BISNIS, AUTO SAVE DLL', 'Rp 5.000')">SC BOT PUSHKONTAK</div>
-    <div class="card" onclick="openModal('Pulsa 50K', 'Isi ulang pulsa Rp50.000 semua operator', 'Rp 50.500')">Pulsa 50K</div>
-    <div class="card" onclick="openModal('Pulsa 100K', 'Isi ulang pulsa Rp100.000 semua operator', 'Rp 100.500')">Pulsa 100K</div>
-    <div class="card" onclick="openModal('Kuota 2GB', 'Paket data 2GB berlaku 30 hari', 'Rp 15.000')">Kuota 2GB</div>
-    <div class="card" onclick="openModal('Kuota 5GB', 'Paket data 5GB berlaku 30 hari', 'Rp 30.000')">Kuota 5GB</div>
-    <div class="card" onclick="openModal('Kuota 10GB', 'Paket data 10GB berlaku 30 hari', 'Rp 50.000')">Kuota 10GB</div>
-    <div class="card" onclick="openModal('Kuota Unlimited', 'Paket data unlimited 30 hari', 'Rp 100.000')">Kuota Unlimited</div>
-    <div class="card" onclick="openModal('Hosting Basic', 'Hosting murah untuk website personal', 'Rp 25.000/bln')">Hosting Basic</div>
-    <div class="card" onclick="openModal('Domain .com', 'Domain profesional untuk brand kamu', 'Rp 120.000/thn')">Domain .com</div>
-  </div>
-
-  <!-- Modal -->
-  <div id="productModal" class="modal">
-    <div class="modal-content">
-      <span class="close" onclick="closeModal()">&times;</span>
-      <h2 id="modalTitle"></h2>
-      <p id="modalDesc"></p>
-      <p id="modalPrice"></p>
-      <a id="buyBtn" href="#" target="_blank" class="btn">Beli Sekarang</a>
+<header>
+  <div class="header-content">
+    <img src="https://i.imgur.com/o535OeU.png" alt="Logo" class="logo">
+    <div class="header-text">
+      <h1>Toko JB</h1>
+      <p>Selamat datang di toko OneToxic!!</p>
     </div>
   </div>
+</header>
 
-  <script>
-    function openModal(title, desc, price) {
-      document.getElementById("modalTitle").innerText = title;
-      document.getElementById("modalDesc").innerText = desc;
-      document.getElementById("modalPrice").innerText = price;
+<style>
+  .header-content { display:flex; align-items:center; justify-content:center; }
+  .logo { width:60px; height:60px; border-radius:50%; margin-right:12px; object-fit:cover; }
+  .header-text { display:flex; flex-direction:column; justify-content:center; text-align:left; }
+  .header-text h1 { margin:0; font-size:24px; }
+  .header-text p { margin:0; font-size:14px; }
+</style>
 
-      let nomorWA = "6281234567890"; // ganti nomor WA kamu
-      let pesan = `Halo, saya mau beli ${title} (${price})`;
-      document.getElementById("buyBtn").href = "https://wa.me/" + nomorWA + "?text=" + encodeURIComponent(pesan);
+<!-- Halaman Home -->
+<div id="homePage" class="container">
+  <h2>Best Seller</h2>
+  <div class="grid">
+    <div class="item" data-target="panelBotModal"><div class="icon-box"><img src="https://i.imgur.com/QCS4Eea.jpeg" alt="Panel Bot"></div><p>ᴘᴀɴᴇʟ ʙᴏᴛ ᴡʜᴀᴛsᴀᴘᴘ</p></div>
+    <div class="item" data-target="resellerModal"><div class="icon-box"><img src="https://i.imgur.com/LnHB78Z.png" alt="Reseller"></div><p>ʀᴇssᴇʟᴇʀ ᴘᴀɴᴇʟ</p></div>
+    <div class="item" data-target="sewaBotModal"><div class="icon-box"><img src="https://i.imgur.com/R3ZMPtB.jpeg" alt="Sewa Bot"></div><p>sᴇᴡᴀ ʙᴏᴛ ᴡʜᴀᴛsᴀᴘᴘ</p></div>
+    <div class="item" data-target="topupGameModal"><div class="icon-box"><img src="https://i.imgur.com/241U7yF.jpeg" alt="Top Up"></div><p>ᴛᴏᴘ ᴜᴘ ɢᴀᴍᴇ</p></div>
+    <div class="item" data-target="nokosModal"><div class="icon-box"><img src="https://i.imgur.com/QFTleSk.png" alt="Nokos WA"></div><p>ɴᴏᴋᴏs ᴡʜᴀᴛsᴀᴘᴘ</p></div>
+    <div class="item" data-target="webModal"><div class="icon-box"><img src="https://cdn-icons-png.flaticon.com/512/1006/1006363.png" alt="Jasa Web"></div><p>ᴊᴀsᴀ ᴘᴇᴍʙᴜᴀᴛᴀɴ ᴡᴇʙ</p></div>
+    <div class="item" data-target="spotifyModal"><div class="icon-box"><img src="https://i.imgur.com/tKwuEdI.jpeg" alt="spotifyModal"></div><p>sᴘᴏᴛɪғʏ ᴘʀᴇᴍɪᴜᴍ</p></div>
+    <div class="item" data-target="VidioModal"><div class="icon-box"><img src="https://i.imgur.com/B60liZH.jpeg" alt="Band WA"></div><p>ᴠɪᴅɪᴏ ᴘʀᴇᴍɪᴜᴍ</p></div>
+    <div class="item" data-target="JasbugModal"><div class="icon-box"><img src="https://i.imgur.com/sOVMmNO.png" alt="jasbug"></div><p>ᴊᴀsʙᴜɢ ᴡʜᴀᴛsᴀᴘᴘ</p></div>
+    <div class="item" data-target="bandModal"><div class="icon-box"><img src="https://i.imgur.com/HHb2GEk.jpeg" alt="Band WA"></div><p>ʙᴀɴᴅ ᴡʜᴀᴛsᴀᴘᴘ</p></div>
+    <div class="item" data-target="unbandModal"><div class="icon-box"><img src="https://i.imgur.com/BJFA5eU.jpeg" alt="Unband WA"></div><p>ᴜɴʙᴀɴᴅ ᴡʜᴀᴛsᴀᴘᴘ</p></div>
+  </div>
+</div>
 
-      document.getElementById("productModal").style.display = "flex";
+<!-- Tombol panjang hijau -->
+<div class="long-buttons">
+  <button class="long-btn">Tombol 1</button>
+  <button class="long-btn">Tombol 2</button>
+  <button class="long-btn">Tombol 3</button>
+</div>
+
+
+<!-- ==================== SEMUA MODAL PRODUK ==================== -->
+
+<!-- Modal Panel Bot WhatsApp -->
+<div id="panelBotModal" class="modal">
+  <div class="modal-content">
+    <span onclick="closeModal('panelBotModal')" class="close">❌</span>
+    <h2 style="text-align:center;">Panel Bot WhatsApp</h2>
+    <img src="https://i.imgur.com/QCS4Eea.jpeg" style="width:100px; display:block; margin:10px auto; border-radius:20px;">
+    <ul><li>Cocok untuk run bot WhatsApp 24 jam</li><li>Server aman & verified</li><li>Support bug & push kontak</li></ul>
+    <div class="price-row"><span>2GB</span><button onclick="openBuyVia(this)" data-product="Panel Bot 2GB" data-price="Rp1.000">Rp1.000</button></div>
+    <div class="price-row"><span>5GB</span><button onclick="openBuyVia(this)" data-product="Panel Bot 5GB" data-price="Rp5.000">Rp5.000</button></div>
+    <div class="price-row"><span>Unlimited</span><button onclick="openBuyVia(this)" data-product="Panel Bot Unlimited" data-price="Rp7.000">Rp7.000</button></div>
+    <button onclick="closeModal('panelBotModal')" class="btn-back">Kembali</button>
+  </div>
+</div>
+
+<!-- Modal Reseller Panel -->
+<div id="resellerModal" class="modal">
+  <div class="modal-content">
+    <span onclick="closeModal('resellerModal')" class="close">❌</span>
+    <h2 style="text-align:center;">Reseller Panel</h2>
+    <img src="https://i.imgur.com/LnHB78Z.png" style="width:100px; display:block; margin:10px auto; border-radius:20px;">
+    <ul><li>Reseller resmi dengan harga termurah</li><li>Akses ke banyak produk</li><li>Support 24 jam fast respon</li></ul>
+    <div class="price-row"><span>Paket Reseller</span><button onclick="openBuyVia(this)" data-product="Reseller Panel" data-price="Rp10.000">Rp10.000</button></div>
+    <button onclick="closeModal('resellerModal')" class="btn-back">Kembali</button>
+  </div>
+</div>
+
+<!-- Modal Sewa Bot WhatsApp -->
+<div id="sewaBotModal" class="modal">
+  <div class="modal-content">
+    <span onclick="closeModal('sewaBotModal')" class="close">❌</span>
+    <h2 style="text-align:center;">Sewa Bot WhatsApp</h2>
+    <img src="https://i.imgur.com/R3ZMPtB.jpeg" style="width:100px; display:block; margin:10px auto; border-radius:20px;">
+    <ul><li>Bot bisa dipakai untuk jaga grup</li><li>Tersedia mode pushkontak</li><li>Tidak perlu ribet setup server</li></ul>
+    <div class="price-row"><span>Bot Pushkontak</span><button onclick="openBuyVia(this)" data-product="Sewa Bot Pushkontak" data-price="Rp2.000/hari">Rp2.000/hari</button></div>
+    <div class="price-row"><span>Bot Jaga Grup</span><button onclick="openBuyVia(this)" data-product="Sewa Bot Jaga Grup" data-price="Rp15.000/minggu">Rp15.000/minggu</button></div>
+    <button onclick="closeModal('sewaBotModal')" class="btn-back">Kembali</button>
+  </div>
+</div>
+
+<!-- Modal Top Up All Game -->
+<div id="topupGameModal" class="modal">
+  <div class="modal-content">
+    <span onclick="closeModal('topupGameModal')" class="close">❌</span>
+    <h2 style="text-align:center;">TOP UP ALL GAME</h2>
+    <img src="https://i.imgur.com/241U7yF.jpeg" style="width:100px; display:block; margin:10px auto; border-radius:20px;">
+    <ul><li>Top up resmi & cepat</li><li>Harga termurah se-Indonesia</li><li>Proses 1–5 menit (otomatis)</li></ul>
+    <label for="playerId"><b>Masukkan ID Player:</b></label>
+    <input id="playerId" type="text" placeholder="Contoh: 123456789" style="width:100%;padding:8px;margin:8px 0;border:1px solid #ccc;border-radius:6px;">
+    <div id="zoneContainer" style="display:none;">
+      <label for="zoneId"><b>Masukkan Zone ID:</b></label>
+      <input id="zoneId" type="text" placeholder="Contoh: 1234" style="width:100%;padding:8px;margin:8px 0;border:1px solid #ccc;border-radius:6px;">
+    </div>
+    <label for="gameSelect"><b>Pilih Game:</b></label>
+    <select id="gameSelect" onchange="updateGamePackages()" style="width:100%;padding:8px;margin:8px 0;border:1px solid #ccc;border-radius:6px;">
+      <option value="ml">Mobile Legends</option>
+      <option value="ff">Free Fire</option>
+      <option value="pubg">PUBG Mobile</option>
+    </select>
+    <div id="packageList"></div>
+    <button onclick="closeModal('topupGameModal')" class="btn-back">Kembali</button>
+  </div>
+</div>
+
+<!-- Modal NOKOS WhatsApp -->
+<div id="nokosModal" class="modal">
+  <div class="modal-content">
+    <span onclick="closeModal('nokosModal')" class="close">❌</span>
+    <h2 style="text-align:center;">NOKOS WhatsApp</h2>
+    <img src="https://i.imgur.com/QFTleSk.png" style="width:100px; display:block; margin:10px auto; border-radius:20px;">
+    <ul><li>Nomor WhatsApp siap pakai</li><li>Bisa digunakan daftar akun baru</li><li>Aman & terpercaya</li></ul>
+    <div class="price-row"><span>Nokos Biasa</span><button onclick="openBuyVia(this)" data-product="Nokos WhatsApp Biasa" data-price="Rp5.000">Rp5.000</button></div>
+    <div class="price-row"><span>Nokos Premium</span><button onclick="openBuyVia(this)" data-product="Nokos WhatsApp Premium" data-price="Rp10.000">Rp10.000</button></div>
+    <button onclick="closeModal('nokosModal')" class="btn-back">Kembali</button>
+  </div>
+</div>
+
+<!-- Modal Jasa Pembuatan Web -->
+<div id="webModal" class="modal">
+  <div class="modal-content">
+    <span onclick="closeModal('webModal')" class="close">❌</span>
+    <h2 style="text-align:center;">Jasa Pembuatan Web</h2>
+    <img src="https://cdn-icons-png.flaticon.com/512/1006/1006363.png" style="width:100px; display:block; margin:10px auto; border-radius:20px;">
+    <ul>
+      <li>Pembuatan website profesional & responsive</li>
+      <li>Harga sesuai paket pilihan</li>
+      <li>Gratis konsultasi sebelum order</li>
+    </ul>
+    <div class="price-row"><span>Paket Landing Page</span><button onclick="openBuyVia(this)" data-product="Web Landing Page" data-price="Rp150.000">Rp150.000</button></div>
+    <div class="price-row"><span>Paket Personal</span><button onclick="openBuyVia(this)" data-product="Web Personal" data-price="Rp300.000">Rp300.000</button></div>
+    <div class="price-row"><span>Paket UMKM/Business</span><button onclick="openBuyVia(this)" data-product="Web Business" data-price="Rp500.000">Rp500.000</button></div>
+    <div class="price-row"><span>Paket E-Commerce</span><button onclick="openBuyVia(this)" data-product="Web E-Commerce" data-price="Rp1.000.000">Rp1.000.000</button></div>
+    <button onclick="closeModal('webModal')" class="btn-back">Kembali</button>
+  </div>
+</div>
+
+<!-- Modal Spotify permium-->
+<div id="spotifyModal" class="modal">
+  <div class="modal-content">
+    <span onclick="closeModal('spotifyModal')" class="close">❌</span>
+    <h2 style="text-align:center;">Reseller Panel</h2>
+    <img src="https://i.imgur.com/tKwuEdI.jpeg" style="width:100px; display:block; margin:10px auto; border-radius:20px;">
+    <ul><li>Reseller resmi dengan harga termurah</li><li>Akses ke banyak produk</li><li>Support 24 jam fast respon</li></ul>
+    <div class="price-row"><span>Paket Reseller</span><button onclick="openBuyVia(this)" data-product="Reseller Panel" data-price="Rp10.000">Rp10.000</button></div>
+    <button onclick="closeModal('spotifyModal')" class="btn-back">Kembali</button>
+  </div>
+</div>
+
+<!-- Modal vidiol -->
+<div id="VidioModal" class="modal">
+  <div class="modal-content">
+    <span onclick="closeModal('VidioModal')" class="close">❌</span>
+    <h2 style="text-align:center;">Reseller Panel</h2>
+    <img src="https://i.imgur.com/B60liZH.jpeg" style="width:100px; display:block; margin:10px auto; border-radius:20px;">
+    <ul><li>Reseller resmi dengan harga termurah</li><li>Akses ke banyak produk</li><li>Support 24 jam fast respon</li></ul>
+    <div class="price-row"><span>Paket Reseller</span><button onclick="openBuyVia(this)" data-product="Reseller Panel" data-price="Rp10.000">Rp10.000</button></div>
+    <button onclick="closeModal('VidioModal')" class="btn-back">Kembali</button>
+  </div>
+</div>
+
+<!-- Modal Jasbug -->
+<div id="JasbugModal" class="modal">
+  <div class="modal-content">
+    <span onclick="closeModal('JasbugModal')" class="close">❌</span>
+    <h2 style="text-align:center;">Jasabug whatsapp</h2>
+    <img src="https://i.imgur.com/sOVMmNO.png" style="width:100px; display:block; margin:10px auto; border-radius:20px;">
+    <ul><li>Reseller resmi dengan harga termurah</li><li>Akses ke banyak produk</li><li>Support 24 jam fast respon</li></ul>
+    <div class="price-row"><span>Paket Reseller</span><button onclick="openBuyVia(this)" data-product="Reseller Panel" data-price="Rp10.000">Rp10.000</button></div>
+    <button onclick="closeModal('JasbugModal')" class="btn-back">Kembali</button>
+  </div>
+</div>
+
+<!-- Modal BAND WhatsApp -->
+<div id="bandModal" class="modal">
+  <div class="modal-content">
+    <span onclick="closeModal('bandModal')" class="close">❌</span>
+    <h2 style="text-align:center;">BAND WhatsApp</h2>
+    <img src="https://i.imgur.com/HHb2GEk.jpeg" style="width:100px; display:block; margin:10px auto; border-radius:20px;">
+    <ul>
+      <li>Layanan blokir / banned WhatsApp</li>
+      <li>Cocok untuk kebutuhan tertentu</li>
+      <li>Proses cepat & aman</li>
+    </ul>
+    <div class="price-row"><span>Band WhatsApp (Biasa)</span><button onclick="openBuyVia(this)" data-product="Band WhatsApp Biasa" data-price="Rp10.000">Rp10.000</button></div>
+    <div class="price-row"><span>Band WhatsApp (Premium)</span><button onclick="openBuyVia(this)" data-product="Band WhatsApp Premium" data-price="Rp20.000">Rp20.000</button></div>
+    <button onclick="closeModal('bandModal')" class="btn-back">Kembali</button>
+  </div>
+</div>
+
+<!-- Modal UNBAND WhatsApp -->
+<div id="unbandModal" class="modal">
+  <div class="modal-content">
+    <span onclick="closeModal('unbandModal')" class="close">❌</span>
+    <h2 style="text-align:center;">UNBAND WhatsApp</h2>
+    <img src="https://i.imgur.com/BJFA5eU.jpeg" style="width:100px; display:block; margin:10px auto; border-radius:20px;">
+    <ul>
+      <li>Layanan buka blokir / banned WhatsApp</li>
+      <li>Aman & terpercaya</li>
+      <li>Proses cepat & bergaransi</li>
+    </ul>
+    <div class="price-row"><span>Unband WhatsApp (Biasa)</span><button onclick="openBuyVia(this)" data-product="Unband WhatsApp Biasa" data-price="Rp15.000">Rp15.000</button></div>
+    <div class="price-row"><span>Unband WhatsApp (Premium)</span><button onclick="openBuyVia(this)" data-product="Unband WhatsApp Premium" data-price="Rp30.000">Rp30.000</button></div>
+    <button onclick="closeModal('unbandModal')" class="btn-back">Kembali</button>
+  </div>
+</div>
+
+<!-- Popup Buy Via -->
+<div id="buyViaModal" class="modal">
+  <div class="modal-content" style="max-width:300px; text-align:center;">
+    <span onclick="closeModal('buyViaModal')" class="close">❌</span>
+    <h3>Silahkan mau buy via apa?</h3>
+    <a id="whatsappLink" href="#" target="_blank" style="display:block;background:#25D366;color:#fff;padding:10px;border-radius:8px;text-decoration:none;margin:10px 0;">WhatsApp</a>
+    <a href="https://t.me/username" target="_blank" style="display:block;background:#0088cc;color:#fff;padding:10px;border-radius:8px;text-decoration:none;margin:10px 0;">Telegram</a>
+  </div>
+</div>
+<script>
+  let selectedProduct = "";
+  let selectedPrice = "";
+
+  document.addEventListener('DOMContentLoaded', function () {
+    const items = document.querySelectorAll('.grid .item');
+    items.forEach(item => {
+      item.addEventListener('click', () => {
+        const targetId = item.getAttribute('data-target');
+        if (targetId) {
+          const modal = document.getElementById(targetId);
+          if (modal) modal.style.display = 'flex';
+        }
+      });
+    });
+
+    const modals = document.querySelectorAll('.modal');
+    modals.forEach(modal => {
+      modal.addEventListener('click', function(e) { if (e.target === modal) modal.style.display = 'none'; });
+    });
+
+    updateGamePackages();
+  });
+
+  function closeModal(id) { document.getElementById(id).style.display = 'none'; }
+
+  function openBuyVia(btn) {
+    selectedProduct = btn.getAttribute("data-product");
+    selectedPrice = btn.getAttribute("data-price");
+    updateWhatsappLink();
+    document.getElementById('buyViaModal').style.display = 'flex';
+  }
+
+  const packages = {
+    ml: [
+      { name: "86 Diamonds", price: "Rp20.000" },
+      { name: "172 Diamonds", price: "Rp40.000" },
+      { name: "257 Diamonds", price: "Rp60.000" },
+      { name: "344 Diamonds", price: "Rp80.000" },
+      { name: "429 Diamonds", price: "Rp95.000" },
+      { name: "514 Diamonds", price: "Rp110.000" },
+      { name: "706 Diamonds", price: "Rp150.000" },
+      { name: "878 Diamonds", price: "Rp185.000" },
+      { name: "1412 Diamonds", price: "Rp300.000" },
+      { name: "2195 Diamonds", price: "Rp450.000" }
+    ],
+    ff: [
+      { name: "100 Diamonds", price: "Rp15.000" },
+      { name: "210 Diamonds", price: "Rp30.000" },
+      { name: "530 Diamonds", price: "Rp75.000" },
+      { name: "1080 Diamonds", price: "Rp145.000" },
+      { name: "2200 Diamonds", price: "Rp290.000" },
+      { name: "5600 Diamonds", price: "Rp720.000" },
+      { name: "10000 Diamonds", price: "Rp1.250.000" },
+      { name: "Weekly Membership", price: "Rp30.000" },
+      { name: "Monthly Membership", price: "Rp120.000" },
+      { name: "Special Bundle", price: "Rp200.000" }
+    ],
+    pubg: [
+      { name: "60 UC", price: "Rp10.000" },
+      { name: "325 UC", price: "Rp50.000" },
+      { name: "660 UC", price: "Rp95.000" },
+      { name: "1800 UC", price: "Rp250.000" },
+      { name: "3850 UC", price: "Rp500.000" },
+      { name: "8100 UC", price: "Rp1.000.000" },
+      { name: "Weekly Pass", price: "Rp30.000" },
+      { name: "Monthly Pass", price: "Rp120.000" },
+      { name: "Elite Pass", price: "Rp200.000" },
+      { name: "Elite Pass Plus", price: "Rp400.000" }
+    ]
+  };
+
+  function updateGamePackages() {
+    const game = document.getElementById("gameSelect").value;
+    const list = document.getElementById("packageList");
+    list.innerHTML = "";
+    document.getElementById("zoneContainer").style.display = (game === "ml") ? "block" : "none";
+    packages[game].forEach(pkg => {
+      const row = document.createElement("div");
+      row.className = "price-row";
+      row.innerHTML = `<span>${pkg.name}</span><button onclick="buyGame('${game}','${pkg.name}','${pkg.price}')">${pkg.price}</button>`;
+      list.appendChild(row);
+    });
+  }
+
+  function buyGame(game, pkgName, price) {
+    const playerId = document.getElementById("playerId").value.trim();
+    const zoneId = document.getElementById("zoneId").value.trim();
+    if (!playerId) { alert("Mohon isi ID Player terlebih dahulu!"); return; }
+    if (game === "ml" && !zoneId) { alert("Mohon isi Zone ID untuk Mobile Legends!"); return; }
+    selectedProduct = pkgName + " (" + game.toUpperCase() + ")";
+    selectedPrice = price;
+    updateWhatsappLinkWithID(playerId, zoneId, game);
+    document.getElementById("buyViaModal").style.display = 'flex';
+  }
+
+  function updateWhatsappLink() {
+    const phone = "6283856437150"; // Nomor admin WA
+    const today = new Date().toLocaleDateString("id-ID");
+    const message = encodeURIComponent(
+      "Halo min saya mau beli produk\n" +
+      "Produk : " + selectedProduct + "\n" +
+      "Harga  : " + selectedPrice + "\n" +
+      "Tanggal: " + today
+    );
+    document.getElementById("whatsappLink").href = `https://wa.me/${phone}?text=${message}`;
+  }
+
+  function updateWhatsappLinkWithID(playerId, zoneId, game) {
+    const phone = "6283856437150"; // Nomor admin WA
+    const today = new Date().toLocaleDateString("id-ID");
+
+    let idInfo = "ID     : " + playerId;
+    if (game === "ml") {
+      idInfo += " (" + zoneId + ")";
     }
 
-    function closeModal() {
-      document.getElementById("productModal").style.display = "none";
-    }
+    const message = encodeURIComponent(
+      "Halo min saya mau top up\n" +
+      "Game   : " + selectedProduct + "\n" +
+      "Harga  : " + selectedPrice + "\n" +
+      idInfo + "\n" +
+      "Tanggal: " + today
+    );
 
-    window.onclick = function(event) {
-      let modal = document.getElementById("productModal");
-      if (event.target == modal) {
-        closeModal();
-      }
-    }
-  </script>
+    document.getElementById("whatsappLink").href = `https://wa.me/${phone}?text=${message}`;
+  }
+
+  // Fungsi pindah halaman
+  function showPage(page) {
+    document.getElementById("homePage").style.display = (page === "home") ? "block" : "none";
+    document.getElementById("rekapPage").style.display = (page === "rekap") ? "block" : "none";
+    document.getElementById("informasiPage").style.display = (page === "informasi") ? "block" : "none";
+
+    // update active nav
+    const navLinks = document.querySelectorAll('.bottom-nav a');
+    navLinks.forEach(link => link.classList.remove('active'));
+    if (page === 'home') navLinks[0].classList.add('active');
+    if (page === 'rekap') navLinks[1].classList.add('active');
+    if (page === 'informasi') navLinks[2].classList.add('active');
+  }
+</script>
 
 </body>
 </html>
